@@ -1,24 +1,31 @@
+import { Link } from 'react-router-dom';
 
-import './Button.css';
-
-function Button({
+export default function Button({
   children,
-  variant = 'primary',
+  to,
+  as,
+  variant = 'dark',
+  size = 'md',
   type = 'button',
   disabled = false,
-  onClick,
+  loading = false,
   className = '',
+  ...props
 }) {
+  const Component = as || (to ? Link : 'button');
+  const componentProps = to ? { to } : { type };
+  const disabledProps =
+    Component === 'button' ? { disabled: disabled || loading } : {};
+
   return (
-    <button
-      type={type}
-      className={`btn btn-${variant} ${className}`}
-      disabled={disabled}
-      onClick={onClick}
+    <Component
+      {...componentProps}
+      {...props}
+      {...disabledProps}
+      className={`button button-${variant} button-${size} ${className}`.trim()}
+      aria-busy={loading || undefined}
     >
       {children}
-    </button>
+    </Component>
   );
 }
-
-export default Button;

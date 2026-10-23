@@ -1,0 +1,7 @@
+# Keep local credentials out of the server repository.
+.env
+.env.*
+!.env.example
+
+node_modules/
+coverage/
